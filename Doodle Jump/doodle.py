@@ -11,6 +11,8 @@ class Doodle(pg.sprite.Sprite):
         self.vector = 3
         self.jump_time = None
 
+
+
     def update(self):
         self.rect.y += self.vector
         keys = pg.key.get_pressed()

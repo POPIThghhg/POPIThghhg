@@ -12,6 +12,10 @@ class Doodle(pg.sprite.Sprite):
         self.jump_time = None
 
 
+    def jump(self):
+        self.vector = 4
+        self.jump_time = pg.time.get_ticks()
+
 
     def update(self):
         self.rect.y += self.vector

@@ -3,6 +3,10 @@ from doodle import Doodle
 from platform import Platform
 import pygame as pg
 
+
+
+
+
 velocity_y = 0
 gravity = 0.5
 jump_power = -10
@@ -32,14 +36,14 @@ clock = pg.time.Clock()
 def random_platform(count):
     y = 600
     for i in range(count):
-        y -= 150
-        random_x = random.randint(0, 500)
+        y -= 100
+        random_x = random.randint(0, 600)
         platform_r = Platform(random_x, y)
         all_sprite.add(platform_r)
         platforms.add(platform_r)
 
 
-random_platform(4)
+random_platform(10)
 
 
 def kill_platform():
@@ -55,11 +59,9 @@ back_ground_y2 = back_ground_img.get_width()
 
 
 
-
 while run:
     screen.fill('white')
     clock.tick(60)
-
 
 
 
@@ -81,20 +83,22 @@ while run:
             run = False
 
     for p in platforms:
-        if doodle.rect.colliderect(p.rect):
-            doodle.vector -= 5
-            jump_time = pg.time.get_ticks()
-
+        if doodle.vector > 0:
+            if doodle.rect.colliderect(p.rect):
+                doodle.vector -= 10
+                jump_time = pg.time.get_ticks()
 
 
     if jump_time is not None:
         elapsed_time = pg.time.get_ticks() - jump_time
         if elapsed_time >= 400:
             doodle.vector = 3
+            jump_time = None
+
 
 
     if doodle.rect.y < 0:
-        doodle.rect.y = 500
+        doodle.rect.y = 300
         kill_platform()
         random_platform(5)
 

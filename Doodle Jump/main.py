@@ -1,10 +1,9 @@
 import random
+from random import randint
+
 from doodle import Doodle
 from platform import Platform
 import pygame as pg
-
-
-
 
 
 velocity_y = 0
@@ -35,10 +34,14 @@ clock = pg.time.Clock()
 
 def random_platform(count):
     y = 600
+    platform_r = Platform(300, 100)
+    all_sprite.add(platform_r)
+    platforms.add(platform_r)
+    mem_random_x = 300 + randint(-120, 120)
     for i in range(count):
         y -= 100
-        random_x = random.randint(0, 600)
-        platform_r = Platform(random_x, y)
+        mem_random_x = mem_random_x + randint(-120, 120)
+        platform_r = Platform(mem_random_x, y)
         all_sprite.add(platform_r)
         platforms.add(platform_r)
 
@@ -59,11 +62,10 @@ back_ground_y2 = back_ground_img.get_width()
 
 
 
+
 while run:
     screen.fill('white')
     clock.tick(60)
-
-
 
     back_ground.blit(back_ground_img, (0, 0))
     screen.blit(back_ground, (back_ground_y, 0))
@@ -82,11 +84,6 @@ while run:
         if event.type == pg.QUIT:
             run = False
 
-    for p in platforms:
-        if doodle.vector > 0:
-            if doodle.rect.colliderect(p.rect):
-                doodle.vector -= 10
-                jump_time = pg.time.get_ticks()
 
 
     if jump_time is not None:
@@ -95,7 +92,12 @@ while run:
             doodle.vector = 3
             jump_time = None
 
-
+    for p in platforms:
+        if doodle.vector > 0:
+            if doodle.rect.colliderect(p.rect):
+                if p.rect.top + 10 >= doodle.rect.bottom >= p.rect.top - 10:
+                    doodle.vector -= 10
+                    jump_time = pg.time.get_ticks()
 
     if doodle.rect.y < 0:
         doodle.rect.y = 300

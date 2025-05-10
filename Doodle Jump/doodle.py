@@ -22,3 +22,5 @@ class Doodle(pg.sprite.Sprite):
             self.rect.x -= 3
         if keys[pg.K_RIGHT]:
             self.rect.x += 3
+
+
